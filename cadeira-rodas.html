@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <title>Cadeira de Rodas - Brasília | Hospiconnect</title>
+  <link rel="canonical" href="https://hospiconnect.online/cadeira-rodas.html" />
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D03MJR481P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-D03MJR481P');
+  // GA4 - Configurações Avançadas de Conversões e Monitoramento
+  
+  // 1. CONVERSÕES - Eventos marcados como conversões
+  // Estes eventos serão automaticamente reconhecidos como conversões no GA4
+  
+  // Conversão: WhatsApp Click (já implementado com marcador de valor)
+  // O evento 'whatsapp_click' já está configurado e será marcado como conversão no GA4
+  
+  // 2. MONITORAMENTO DE SCROLL DEPTH
+  let scrollDepths = [25, 50, 75, 100];
+  let scrollTriggered = {};
+  
+  window.addEventListener('scroll', function() {
+    let scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    
+    scrollDepths.forEach(function(depth) {
+      if (scrollPercent >= depth && !scrollTriggered[depth]) {
+        scrollTriggered[depth] = true;
+        gtag('event', 'scroll_depth', {
+          'event_category': 'Engajamento',
+          'event_label': depth + '%',
+          'value': depth
+        });
+      }
+    });
+  });
+  
+  // 3. MONITORAMENTO DE TEMPO NA PÁGINA
+  let timeOnPage = 0;
+  let timeCheckpoints = [10, 30, 60, 120]; // segundos
+  let timeTriggered = {};
+  
+  setInterval(function() {
+    timeOnPage += 5;
+    
+    timeCheckpoints.forEach(function(checkpoint) {
+      if (timeOnPage >= checkpoint && !timeTriggered[checkpoint]) {
+        timeTriggered[checkpoint] = true;
+        gtag('event', 'time_on_page', {
+          'event_category': 'Engajamento',
+          'event_label': checkpoint + 's',
+          'value': checkpoint
+        });
+      }
+    });
+  }, 5000);
+  
+  // 4. DETECÇÃO DE SAÍDA (EXIT INTENT)
+  document.addEventListener('mouseleave', function(e) {
+    if (e.clientY < 0) {
+      gtag('event', 'exit_intent', {
+        'event_category': 'Comportamento',
+        'event_label': 'Mouse saiu da página'
+      });
+    }
+  }, {once: true});
+  
+  // 5. CLIQUES EM LINKS EXTERNOS
+  document.addEventListener('click', function(e) {
+    let link = e.target.closest('a');
+    if (link && link.hostname !== window.location.hostname) {
+      gtag('event', 'external_link_click', {
+        'event_category': 'Navegação',
+        'event_label': link.href,
+        'value': 1
+      });
+    }
+  });
+  
+  // 6. PERFORMANCE MONITORING (Core Web Vitals)
+  if ('PerformanceObserver' in window) {
+    // Largest Contentful Paint (LCP)
+    new PerformanceObserver(function(list) {
+      const entries = list.getEntries();
+      const lastEntry = entries[entries.length - 1];
+      gtag('event', 'web_vitals', {
+        'event_category': 'Performance',
+        'event_label': 'LCP',
+        'value': Math.round(lastEntry.renderTime || lastEntry.loadTime)
+      });
+    }).observe({type: 'largest-contentful-paint', buffered: true});
+    
+    // First Input Delay (FID)
+    new PerformanceObserver(function(list) {
+      list.getEntries().forEach(function(entry) {
+        gtag('event', 'web_vitals', {
+          'event_category': 'Performance',
+          'event_label': 'FID',
+          'value': Math.round(entry.processingStart - entry.startTime)
+        });
+      });
+    }).observe({type: 'first-input', buffered: true});
+    
+    // Cumulative Layout Shift (CLS)
+    let clsScore = 0;
+    new PerformanceObserver(function(list) {
+      list.getEntries().forEach(function(entry) {
+        if (!entry.hadRecentInput) {
+          clsScore += entry.value;
+        }
+      });
+      gtag('event', 'web_vitals', {
+        'event_category': 'Performance',
+        'event_label': 'CLS',
+        'value': Math.round(clsScore * 1000)
+      });
+    }).observe({type: 'layout-shift', buffered: true});
+  }
+  
+  // 7. CONVERSÃO: ORÇAMENTO VIA WHATSAPP (Meta de Conversão)
+  // Rastrear quando usuário permanece na página por 30s+ E clica no WhatsApp
+  let userEngaged = false;
+  setTimeout(function() {
+    userEngaged = true;
+  }, 30000);
+  
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.whatsapp-float') && userEngaged) {
+      gtag('event', 'conversion', {
+        'event_category': 'Conversão',
+        'event_label': 'Orçamento WhatsApp Qualificado',
+        'value': 1,
+        'currency': 'BRL'
+      });
+    }
+  });
+  
+  // GA4 - RELATÓRIOS PERSONALIZADOS E DIMENSÕES CUSTOMIZADAS
+  
+  // User Properties (propriedades do usuário para segmentação)
+  gtag('set', 'user_properties', {
+    'device_category': /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+    'page_category': 'Cadeira de Rodas',
+    'visitor_type': localStorage.getItem('returning_visitor') ? 'Returning' : 'New'
+  });
+  
+  // Marcar como visitante recorrente
+  localStorage.setItem('returning_visitor', 'true');
+  
+  // Custom Dimensions para relatórios
+  gtag('event', 'page_metadata', {
+    'custom_dimension_1': 'Cadeira de Rodas',
+    'custom_dimension_2': document.referrer || 'Direct',
+    'custom_dimension_3': new Date().getHours() >= 8 && new Date().getHours() < 18 ? 'Horário Comercial' : 'Fora do Horário',
+    'custom_dimension_4': navigator.language || 'pt-BR'
+  });
+  
+  // Enhanced Ecommerce (para relatórios de produtos)
+  gtag('event', 'view_item_list', {
+    'event_category': 'Ecommerce',
+    'items': [{
+      'item_name': 'Cadeira de Rodas',
+      'item_category': 'Equipamento Hospitalar',
+      'item_brand': 'HospiConnect',
+      'item_list_name': 'Produtos',
+      'index': 1
+    }]
+  });
+  
+  // GA4 - SISTEMA DE ALERTAS AUTOMATIZADOS E DETECÇÃO DE ANOMALIAS
+  
+  // 1. Monitoramento de Erros JavaScript
+  window.addEventListener('error', function(e) {
+    gtag('event', 'exception', {
+      'description': e.message + ' at ' + e.filename + ':' + e.lineno,
+      'fatal': false,
+      'event_category': 'Alerta',
+      'event_label': 'JavaScript Error'
+    });
+  });
+  
+  // 2. Detecção de Página Lenta (Performance)
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      let loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+      
+      // Alerta se página demorar mais de 3 segundos
+      if (loadTime > 3000) {
+        gtag('event', 'performance_alert', {
+          'event_category': 'Alerta',
+          'event_label': 'Página Lenta',
+          'value': Math.round(loadTime),
+          'non_interaction': true
+        });
+      }
+      
+      // Alerta se página for muito rápida (pode indicar cache quebrado)
+      if (loadTime < 100) {
+        gtag('event', 'performance_alert', {
+          'event_category': 'Alerta',
+          'event_label': 'Cache Potencial',
+          'value': Math.round(loadTime),
+          'non_interaction': true
+        });
+      }
+    }, 0);
+  });
+  
+  // 3. Detecção de Links Quebrados (404)
+  document.addEventListener('click', function(e) {
+    let link = e.target.closest('a');
+    if (link && link.href) {
+      fetch(link.href, {method: 'HEAD', mode: 'no-cors'})
+        .catch(function() {
+          gtag('event', 'broken_link', {
+            'event_category': 'Alerta',
+            'event_label': link.href,
+            'page_location': window.location.href
+          });
+        });
+    }
+  });
+  
+  // 4. Detecção de Imagens Quebradas
+  document.addEventListener('DOMContentLoaded', function() {
+    let images = document.querySelectorAll('img');
+    images.forEach(function(img) {
+      img.addEventListener('error', function() {
+        gtag('event', 'broken_image', {
+          'event_category': 'Alerta',
+          'event_label': img.src,
+          'page_location': window.location.href
+        });
+      });
+    });
+  });
+  
+  // 5. Monitoramento de Sessão Anormalmente Longa
+  let sessionStart = Date.now();
+  setInterval(function() {
+    let sessionDuration = (Date.now() - sessionStart) / 1000;
+    
+    // Alerta após 30 minutos (possível bot ou usuário esqueceu aba aberta)
+    if (sessionDuration > 1800 && !window.longSessionReported) {
+      window.longSessionReported = true;
+      gtag('event', 'anomaly_alert', {
+        'event_category': 'Alerta',
+        'event_label': 'Sessão Anormalmente Longa',
+        'value': Math.round(sessionDuration)
+      });
+    }
+  }, 60000); // Verifica a cada 1 minuto
+  
+  // 6. Detecção de Bot/Scraper Suspeito
+  (function() {
+    let suspiciousActivity = 0;
+    
+    // Verificar headless browser
+    if (navigator.webdriver) suspiciousActivity++;
+    
+    // Verificar se tem plugins comuns
+    if (navigator.plugins.length === 0) suspiciousActivity++;
+    
+    // Verificar se é PhantomJS
+    if (window.callPhantom || window._phantom) suspiciousActivity++;
+    
+    // Verificar selenium
+    if (window.document.documentElement.getAttribute('webdriver')) suspiciousActivity++;
+    
+    if (suspiciousActivity >= 2) {
+      gtag('event', 'bot_detection', {
+        'event_category': 'Alerta',
+        'event_label': 'Possível Bot/Scraper',
+        'value': suspiciousActivity,
+        'non_interaction': true
+      });
+    }
+  })();
+  
+  // 7. Alerta de Taxa de Rejeição Alta (bounce imediato)
+  let hasInteracted = false;
+  ['click', 'scroll', 'keypress'].forEach(function(event) {
+    document.addEventListener(event, function() {
+      hasInteracted = true;
+    }, {once: true});
+  });
+  
+  setTimeout(function() {
+    if (!hasInteracted) {
+      gtag('event', 'high_bounce_risk', {
+        'event_category': 'Alerta',
+        'event_label': 'Sem Interação após 5s',
+        'non_interaction': true
+      });
+    }
+  }, 5000);
+  
+  // 8. Detecção de Navegação Suspeita (velocidade anormal)
+  let pageViews = parseInt(sessionStorage.getItem('pageViews') || '0') + 1;
+  sessionStorage.setItem('pageViews', pageViews);
+  
+  let sessionTime = Date.now() - parseInt(sessionStorage.getItem('sessionStart') || Date.now());
+  if (!sessionStorage.getItem('sessionStart')) {
+    sessionStorage.setItem('sessionStart', Date.now());
+  }
+  
+  // Mais de 10 páginas em menos de 1 minuto = possível bot
+  if (pageViews > 10 && sessionTime < 60000) {
+    gtag('event', 'anomaly_alert', {
+      'event_category': 'Alerta',
+      'event_label': 'Navegação Muito Rápida',
+      'value': pageViews
+    });
+  }
+
+  </script>
+  <!-- GA4 Event: Page View -->
+  <script>
+    gtag('event', 'page_view', {
+      'page_title': 'Cadeira de Rodas',
+      'page_location': window.location.href,
+      'page_path': window.location.pathname
+    });
+  </script>
+
+  <meta name="description" content="Cadeira de Rodas em Brasília. Entrega rápida, equipamentos revisados. Orçamento via WhatsApp.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+  
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cadeira de Rodas - Brasília | Hospiconnect">
+  <meta property="og:description" content="Cadeira de Rodas em Brasília. Entrega rápida, equipamentos revisados. Orçamento via WhatsApp.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>body{font-family:'Inter',sans-serif}@keyframes blob{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(20px,-50px) scale(1.1)}50%{transform:translate(-20px,20px) scale(0.9)}75%{transform:translate(50px,50px) scale(1.05)}}.animate-blob{animation:blob 20s infinite}.glass{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2)}.glow:hover{box-shadow:0 0 30px rgba(1E88E5,0.6)}</style>
+  <!-- Schema.org Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Cadeira de Rodas - Locação e Venda",
+    "description": "Cadeiras de rodas para locação e venda em Brasília. Diversos modelos disponíveis para mobilidade e conforto.",
+    "image": "https://hospiconnect.online/cadeira_rodas_hospitalar_web.webp",
+    "brand": {
+      "@type": "Brand",
+      "name": "HospiConnect"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "availability": "https://schema.org/InStock",
+      "priceCurrency": "BRL",
+      "url": "https://hospiconnect.online/cadeira-rodas.html",
+      "seller": {
+        "@type": "Organization",
+        "name": "HospiConnect"
+      }
+    },
+    "category": "Equipamento Hospitalar"
+  }
+  </script>
+
+  <style>
+  /* Mobile Responsiveness - Otimizado */
+  @media (max-width: 768px) {
+    /* Títulos principais */
+    h1 { font-size: 2rem !important; line-height: 1.2 !important; }
+    h2 { font-size: 1.75rem !important; line-height: 1.3 !important; }
+    h3 { font-size: 1.5rem !important; line-height: 1.4 !important; }
+    h4 { font-size: 1.25rem !important; }
+    
+    /* Textos gerais */
+    body { font-size: 0.95rem !important; }
+    p { font-size: 0.95rem !important; line-height: 1.6 !important; }
+    
+    /* Ajustar classes Tailwind grandes */
+    .text-5xl, .text-6xl, .text-7xl { font-size: 2rem !important; }
+    .text-4xl { font-size: 1.75rem !important; }
+    .text-3xl { font-size: 1.5rem !important; }
+    .text-2xl { font-size: 1.25rem !important; }
+    .text-xl { font-size: 1.125rem !important; }
+    
+    /* Ícones grandes */
+    .text-8xl, .text-9xl { font-size: 4rem !important; }
+    
+    /* Padding e margens */
+    .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+    .py-8 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+    .p-8 { padding: 1.5rem !important; }
+    
+    /* Container */
+    .container { padding-left: 1rem !important; padding-right: 1rem !important; }
+    
+    /* Botões */
+    button, .btn { font-size: 1rem !important; padding: 0.75rem 1.5rem !important; }
+    
+    /* Header/Nav */
+    nav a { font-size: 0.9rem !important; }
+    
+    /* Formulário */
+    input, textarea, select { font-size: 1rem !important; }
+    label { font-size: 0.9rem !important; }
+  }
+  
+  @media (max-width: 480px) {
+    /* Extra small devices */
+    h1 { font-size: 1.75rem !important; }
+    h2 { font-size: 1.5rem !important; }
+    .text-5xl, .text-6xl { font-size: 1.75rem !important; }
+    .text-8xl, .text-9xl { font-size: 3rem !important; }
+  }
+  </style>
+
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-blue-50">
+
+<div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+  <div class="absolute top-20 left-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-blob"></div>
+  <div class="absolute top-40 right-20 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-blob" style="animation-delay:2s"></div>
+</div>
+
+<nav class="sticky top-0 z-50 glass border-b border-white/30 shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-gradient-to-br from-[#0E6B58] to-emerald-500 rounded-xl flex items-center justify-center shadow-xl">
+          <span class="text-white font-black text-2xl">H</span>
+        </div>
+        <div>
+          <h1 class="text-2xl font-black text-[#0B1F1A]">HOSPICONNECT</h1>
+          <p class="text-xs text-gray-600">Soluções Hospitalares</p>
+        </div>
+      </a>
+      <a href="index.html" class="px-6 py-3 bg-white/50 backdrop-blur-sm border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-white transition">← Voltar</a>
+    </div>
+  </div>
+</nav>
+
+<main class="py-12">
+  <!-- Breadcrumbs -->
+  <nav aria-label="breadcrumb" class="container mx-auto px-4 pt-24 pb-4">
+    <ol class="breadcrumb flex items-center text-sm text-gray-600">
+      <li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item"><a href="#">Produtos</a></li><li class="breadcrumb-item active" aria-current="page">Cadeira de Rodas</li>
+    </ol>
+  </nav>
+  
+  <style>
+  .breadcrumb{display:flex;flex-wrap:wrap;padding:0;margin:0;list-style:none}
+  .breadcrumb-item{display:flex;align-items:center}
+  .breadcrumb-item+.breadcrumb-item::before{content:"›";padding:0 8px;color:#9ca3af}
+  .breadcrumb-item a{color:#6b7280;text-decoration:none;transition:color 0.2s}
+  .breadcrumb-item a:hover{color:#128C7E}
+  .breadcrumb-item.active{color:#1f2937;font-weight:500}
+  </style>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-8 flex items-center gap-2 text-sm">
+      <a href="index.html" class="text-gray-600 hover:text-blue-600">Início</a>
+      <span class="text-gray-400">/</span>
+      <a href="index.html#equipamentos" class="text-gray-600 hover:text-blue-600">Equipamentos</a>
+      <span class="text-gray-400">/</span>
+      <span class="text-blue-600 font-semibold">Cadeira de Rodas</span>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12">
+      <div class="relative group">
+        <div class="absolute -inset-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition"></div>
+        <div class="relative bg-white/80 backdrop-blur-xl border border-white/40 rounded-3xl shadow-2xl overflow-hidden p-8">
+          <img src="cadeira_rodas_hospitalar_web.webp" alt="Cadeira de Rodas - Locação e Venda em Brasília" class="w-full h-96 object-cover rounded-2xl" loading="lazy">
+        </div>
+      </div>
+
+      <div>
+        <div class="inline-block px-4 py-2 bg-blue-100 border border-blue-300 rounded-full mb-4">
+          <span class="text-blue-700 font-bold text-sm">Locação e Venda</span>
+        </div>
+        <h1 class="text-5xl font-black mb-4">
+          <span class="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Cadeira de Rodas</span>
+        </h1>
+        <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+          Equipamento de alta qualidade para uso domiciliar, clínico e hospitalar. Entrega e instalação incluídas em Brasília e região.
+        </p>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold">✓</div>
+            <div><h3 class="font-bold text-gray-900">Equipamento Revisado</h3><p class="text-gray-600 text-sm">Manutenção preventiva completa</p></div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold">✓</div>
+            <div><h3 class="font-bold text-gray-900">Entrega em 24h</h3><p class="text-gray-600 text-sm">Instalação e orientação incluídas</p></div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold">✓</div>
+            <div><h3 class="font-bold text-gray-900">Suporte Técnico</h3><p class="text-gray-600 text-sm">Assistência durante todo o período</p></div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold">✓</div>
+            <div><h3 class="font-bold text-gray-900">Certificado e Seguro</h3><p class="text-gray-600 text-sm">Equipamento testado e aprovado</p></div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <a href="https://wa.me/5561981964138?text=Ol%C3%A1!%20Gostaria%20de%20um%20orçamento%20de%20Cadeira de Rodas." target="_blank"
+             class="block text-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold rounded-full shadow-2xl hover:scale-105 transition-transform glow">
+            📱 Solicitar Orçamento no WhatsApp
+          </a>
+          <p class="text-center text-sm text-gray-600">Resposta rápida • Entrega em 24h • Sem burocracia</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 grid md:grid-cols-3 gap-8">
+      <div class="bg-white/80 backdrop-blur-xl border border-gray-200 rounded-2xl p-6">
+        <div class="text-4xl mb-3">🚚</div>
+        <h3 class="font-bold text-lg mb-2">Entrega Rápida</h3>
+        <p class="text-gray-600 text-sm">Instalação em até 24h</p>
+      </div>
+      <div class="bg-white/80 backdrop-blur-xl border border-gray-200 rounded-2xl p-6">
+        <div class="text-4xl mb-3">💰</div>
+        <h3 class="font-bold text-lg mb-2">Preço Justo</h3>
+        <p class="text-gray-600 text-sm">Orçamento transparente</p>
+      </div>
+      <div class="bg-white/80 backdrop-blur-xl border border-gray-200 rounded-2xl p-6">
+        <div class="text-4xl mb-3">🔧</div>
+        <h3 class="font-bold text-lg mb-2">Suporte Técnico</h3>
+        <p class="text-gray-600 text-sm">Assistência completa</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="bg-gray-900 text-white py-8 mt-12">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <p class="text-gray-400">&copy; <span id="current-year">2024</span> Hospiconnect. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/5561981964138?text=Ol%C3%A1!%20Gostaria%20de%20um%20orçamento." target="_blank"
+   class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-all">
+  <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"6-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+
+<script>
+// Dynamic copyright year
+document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/5561981964138?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20orçamento." 
+   target="_blank" 
+   rel="noopener noreferrer"
+   class="whatsapp-float" onclick="gtag(\'event\', \'whatsapp_click\', {\'event_category\': \'Conversao\', \'event_label\': \'Cadeira de Rodas', 'value': 1});"
+   aria-label="Fale conosco no WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="whatsapp-icon">
+    <circle cx="16" cy="16" r="16" fill="#25D366"/>
+    <path d="M16 3C8.82 3 3 8.82 3 16c0 2.26.59 4.38 1.62 6.22L3.05 28.95l6.89-1.8A12.94 12.94 0 0016 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm6.35 18.5c-.26.73-1.54 1.34-2.51 1.52-.67.14-1.54.25-4.46-.96-3.74-1.54-6.16-5.34-6.34-5.59-.18-.25-1.51-2.01-1.51-3.84 0-1.83.96-2.72 1.3-3.09.34-.37.74-.46.99-.46s.5 0 .72.01c.23.01.54-.09.84.65.31.74 1.05 2.57 1.14 2.75.09.18.15.4.03.64-.12.25-.18.4-.36.62-.18.21-.38.48-.54.64-.18.18-.37.37-.16.73.21.36.93 1.54 2 2.49 1.37 1.22 2.53 1.61 2.89 1.79.36.18.57.15.78-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.78-.18s1.9.9 2.23 1.06c.33.17.55.25.63.38.08.13.08.78-.23 1.65z" fill="white"/>
+  </svg>
+  <div class="whatsapp-pulse"></div>
+</a>
+
+<style>.whatsapp-float{position:fixed;bottom:25px;right:25px;z-index:9999;width:60px;height:60px;background:linear-gradient(135deg,#25D366 0%,#1DA851 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(37,211,102,0.4);transition:all 0.3s ease;cursor:pointer;text-decoration:none}.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(37,211,102,0.6)}.whatsapp-icon{width:36px;height:36px;position:relative;z-index:2}.whatsapp-pulse{position:absolute;width:60px;height:60px;border-radius:50%;background:rgba(37,211,102,0.3);animation:pulse-animation 1.5s infinite}@keyframes pulse-animation{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}@media (max-width:768px){.whatsapp-float{width:56px;height:56px;bottom:20px;right:20px}.whatsapp-icon{width:32px;height:32px}.whatsapp-pulse{width:56px;height:56px}}</style>
+
+</body>
+</html>

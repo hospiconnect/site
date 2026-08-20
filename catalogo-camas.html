@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo de Camas Hospitalares - Hospiconnect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.2); }
+    @media (max-width:600px){ #menuDesktop{ display:none!important; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#eef5fa] text-gray-900">
+
+  <!-- ===================== -->
+  <!-- BARRA SUPERIOR -->
+  <!-- ===================== -->
+  <header class="sticky top-0 z-40 glass border-b border-white/30 shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
+
+    <!-- Marca -->
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-700 to-emerald-500
+                  text-white font-black grid place-items-center">H</div>
+      <div>
+        <div class="text-xl font-black">HOSPICONNECT</div>
+        <div class="text-xs text-gray-600">Soluções Hospitalares</div>
+      </div>
+    </a>
+
+    <!-- MENUS CENTRALIZADOS -->
+    <div id="menuDesktop" class="flex flex-1 justify-center gap-4">
+      <a href="catalogo-camas.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Camas</a>
+      <a href="catalogo-poltronas.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Poltronas</a>
+      <a href="catalogo-mesas.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Mesas</a>
+      <a href="catalogo-bercos.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Berços</a>
+      <a href="catalogo-carros.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Carros</a>
+      <a href="colchoes.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Colchões</a>
+      <a href="cadeiras.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Cadeiras</a>
+      <a href="catalogo-macas.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Macas</a>
+      <a href="elevadores.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Elevadores</a>
+    </div>
+
+    <!-- WHATSAPP À DIREITA  -->
+    <a href="https://wa.me/5561981964138?text=Olá!%20Gostaria%20de%20um%20orçamento."
+       class="ml-auto px-2 py-2 rounded-md hover:bg-gray-50 flex items-center">
+
+      <svg viewBox="0 0 32 32" fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="w-7 h-7">
+        <circle cx="16" cy="16" r="16" fill="#25D366"/>
+        <path d="M16 3C8.82 3 3 8.82 3 16c0 2.26.59 4.38 1.62 6.22L3.05 28.95l6.89-1.8A12.94 12.94 0 0016 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm6.35 18.5c-.26.73-1.54 1.34-2.51 1.52-.67.14-1.54.25-4.46-.96-3.74-1.54-6.16-5.34-6.34-5.59-.18-.25-1.51-2.01-1.51-3.84 0-1.83.96-2.72 1.3-3.09.34-.37.74-.46.99-.46s.5 0 .72.01c.23.01.54-.09.84.65.31.74 1.05 2.57 1.14 2.75.09.18.15.4.03.64-.12.25-.18.4-.36.62-.18.21-.38.48-.54.64-.18.18-.37.37-.16.73.21.36.93 1.54 2 2.49 1.37 1.22 2.53 1.61 2.89 1.79.36.18.57.15.78-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.78-.18s1.9.9 2.23 1.06c.33.17.55.25.63.38.08.13.08.78-.23 1.65z"
+              fill="white"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<section class="max-w-7xl mx-auto px-4 mt-8">
+  <h1 class="text-3xl font-black text-center text-emerald-700">Catálogo de Camas Hospitalares</h1>
+</section>
+
+<section class="max-w-7xl mx-auto px-4 mt-8 grid md:grid-cols-3 gap-4">
+  <select id="fTipo" class="p-2 rounded border"><option value="">Filtrar por tipo</option><option>Manual</option><option>Motorizada</option><option>Infantil</option><option>PPP</option></select>
+  <select id="fModelo" class="p-2 rounded border"><option value="">Modelo</option></select>
+  <button id="limpar" class="p-2 rounded border bg-white">Limpar filtros</button>
+</section>
+
+<section id="catalogo" class="max-w-7xl mx-auto px-4 mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></section>
+<div class="text-center my-10"><button id="verMais" class="px-6 py-2 bg-emerald-600 text-white rounded">Ver mais</button></div>
+
+<div id="modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+  <div class="bg-white p-6 max-w-2xl rounded-xl relative max-h-[80vh] overflow-y-auto">
+    <button onclick="closeModal()" class="absolute top-2 right-3 text-xl">×</button>
+    <h2 id="modalTitulo" class="text-xl font-black mb-3"></h2>
+    <p id="modalDescricao" class="whitespace-pre-line text-sm leading-relaxed"></p>
+  </div>
+</div>
+
+<footer class="text-center py-8 text-sm">© 2026 Hospiconnect. Todos os direitos reservados.</footer>
+
+<script>
+const camas = [
+  // MANUAIS (4)
+  {id:'1005',tipo:'Manual',nome:'Cama Hospitalar Manual',desc:`Cama hospitalar manual com leito articulado em quatro seções.
+
+Possui acionamento por manivelas escamoteáveis que permitem ajustes de cabeceira e pernas.
+
+Estrutura em aço carbono com pintura eletrostática e tratamento antiferrugem.
+
+Indicada para internações clínicas e uso hospitalar geral.
+
+Carga segura elevada e registro ANVISA.`},
+  {id:'1006',tipo:'Manual',nome:'Cama Hospitalar Manual Articulada',desc:`Cama hospitalar manual articulada com três manivelas.
+
+Permite Fowler, Semi-Fowler, flexão de pernas, posição cardíaca e ajuste de altura conforme versão.
+
+Estrutura em aço carbono reforçado, leito em quatro seções.
+
+Grades laterais em PEAD.
+
+Uso hospitalar contínuo, registrada na ANVISA.`},
+  {id:'1008',tipo:'Manual',nome:'Cama Hospitalar Manual Reforçada',desc:`Cama manual reforçada para uso intensivo.
+
+Movimentos Fowler, Cardíaco e Trendelenburg conforme modelo.
+
+Estrutura robusta em aço carbono e acabamento anticorrosivo.
+
+Indicada para hospitais e clínicas.`},
+  {id:'1010',tipo:'Manual',nome:'Cama Hospitalar Alta Capacidade',desc:`Cama manual para pacientes de maior peso.
+
+Capacidade de trabalho elevada, estrutura reforçada.
+
+Leito articulado em quatro seções.
+
+Indicada para internações especiais.`},
+
+  // MOTORIZADAS (7)
+  {id:'1031',tipo:'Motorizada',nome:'Cama Hospitalar Elétrica Básica',desc:`Cama elétrica hospitalar com ajustes essenciais.
+
+Movimentos elétricos de dorso e pernas.
+
+Estrutura em aço carbono.
+
+Indicada para internações clínicas.`},
+  {id:'1032',tipo:'Motorizada',nome:'Cama Hospitalar Elétrica',desc:`Cama elétrica com múltiplas variações.
+
+Permite ajustes de posição e altura conforme modelo.
+
+Grades em PEAD ou ABS.
+
+Uso hospitalar geral.`},
+  {id:'1033',tipo:'Motorizada',nome:'Cama Hospitalar Elétrica ABS',desc:`Cama elétrica com leito em ABS removível.
+
+Facilita higienização e controle de infecção.
+
+Movimentos elétricos completos.
+
+Indicada para ambientes hospitalares exigentes.`},
+  {id:'1037',tipo:'Motorizada',nome:'Cama Hospitalar Elétrica Premium',desc:`Modelo premium com múltiplas posições terapêuticas.
+
+Inclui Fowler, Trendelenburg, Proclive e Poltrona.
+
+Alta durabilidade e conforto ao paciente.`},
+  {id:'1040',tipo:'Motorizada',nome:'Cama Elétrica Completa',desc:`Cama elétrica completa de alta complexidade.
+
+Ajustes elétricos de altura, dorso e pernas.
+
+Compatível com diversos acessórios.
+
+Indicada para hospitais de médio e grande porte.`},
+  {id:'1041',tipo:'Motorizada',nome:'Cama Elétrica com Alarmes',desc:`Cama elétrica com sistemas de segurança e alarmes.
+
+Controle supervisor e recursos avançados.
+
+Uso em internações críticas.`},
+  {id:'1043',tipo:'Motorizada',nome:'Cama Elétrica com Balança',desc:`Cama elétrica com sistema de balança integrado.
+
+Permite monitorar peso do paciente.
+
+Indicada para UTIs e centros especializados.`},
+
+  // PPP (2)
+  {id:'1051',tipo:'PPP',nome:'Cama Hospitalar PPP',desc:`Cama para Pré-Parto, Parto e Pós-Parto.
+
+Seção de pernas retrátil.
+
+Acessórios obstétricos inclusos.
+
+Uso em maternidades.`},
+  {id:'1052',tipo:'PPP',nome:'Cama Hospitalar PPP Alternativa',desc:`Versão alternativa de cama PPP.
+
+Acionamento elétrico.
+
+Indicada para centros obstétricos.`},
+
+  // INFANTIS (4)
+  {id:'1080',tipo:'Infantil',nome:'Cama Hospitalar Infantil',desc:`Cama hospitalar infantil com leito fixo.
+
+Dimensões reduzidas para pediatria.
+
+Grades laterais seguras.
+
+Uso hospitalar infantil.`},
+  {id:'1082',tipo:'Infantil',nome:'Cama Hospitalar Infantil Articulada',desc:`Cama infantil articulada.
+
+Movimentos Fowler e afins.
+
+Estrutura em aço reforçado.`},
+  {id:'1084',tipo:'Infantil',nome:'Cama Hospitalar Infantil Elétrica',desc:`Cama infantil com acionamento elétrico.
+
+Maior ergonomia para o cuidado pediátrico.`},
+  {id:'1085',tipo:'Infantil',nome:'Cama Hospitalar Infantil Manual',desc:`Cama infantil manual com articulação básica.
+
+Indicada para cuidados clínicos pediátricos.`}
+];
+
+let limit = 6;
+const cat = document.getElementById('catalogo');
+const fTipo = document.getElementById('fTipo');
+const fModelo = document.getElementById('fModelo');
+const verMais = document.getElementById('verMais');
+
+fModelo.innerHTML += [...new Set(camas.map(c=>c.id))].map(i=>`<option>${i}</option>`).join('');
+
+function render(){
+  const list = camas.filter(c => (!fTipo.value || c.tipo===fTipo.value) && (!fModelo.value || c.id===fModelo.value));
+  const slice = (!fTipo.value && !fModelo.value) ? list.slice(0,limit) : list;
+  verMais.style.display = (list.length > limit && !fTipo.value && !fModelo.value) ? 'inline-block' : 'none';
+  cat.innerHTML = slice.map((c,i)=>`
+    <div class="bg-white rounded-xl p-4 shadow text-center">
+      <img src="Cama${c.id}.png" class="mx-auto w-40 h-52 object-contain mb-4 cursor-pointer" onclick="openModal(${camas.indexOf(c)})">
+      <h3 class="font-bold mb-3">${c.nome} – ${c.id}</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <a href="https://wa.me/5561981964138?text=Quero%20COMPRAR%20${c.nome}%20modelo%20${c.id}" class="bg-emerald-600 text-white rounded py-2">Comprar</a>
+        <a href="https://wa.me/5561981964138?text=Quero%20ALUGAR%20${c.nome}%20modelo%20${c.id}" class="bg-blue-600 text-white rounded py-2">Alugar</a>
+      </div>
+    </div>`).join('');
+}
+
+function openModal(index){
+  const c = camas[index];
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  modalTitulo.innerText = c.nome;
+  modalDescricao.innerText = c.desc;
+}
+
+function closeModal(){ modal.classList.add('hidden'); }
+
+verMais.onclick = ()=>{ limit=99; render(); };
+fTipo.onchange = fModelo.onchange = render;
+limpar.onclick = ()=>{ fTipo.value=''; fModelo.value=''; limit=6; render(); };
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>Catálogo de Berços Hospitalares - Hospiconnect</title>
+
+ <!-- TAILWIND (EXATAMENTE COMO NO ORIGINAL) -->
+ <script src="https://cdn.tailwindcss.com"></script>
+
+ <style>
+ html { scroll-behavior: smooth; }
+ .glass {
+   background: rgba(255,255,255,0.1);
+   backdrop-filter: blur(10px);
+   border:1px solid rgba(255,255,255,0.2);
+ }
+ @media (max-width:600px){
+   #menuDesktop{ display:none!important; }
+ }
+ details summary { cursor:pointer; list-style:none; }
+ details summary::-webkit-details-marker { display:none; }
+
+ #portalOverlay{
+   position:fixed;
+   inset:0;
+   background:rgba(0,0,0,0.7);
+   display:none;
+   align-items:center;
+   justify-content:center;
+   z-index:9999;
+ }
+ #portalOverlay.active{ display:flex; }
+ #portalPopup{
+   width:240px;
+   height:160px;
+   background:#fff;
+   border-radius:10px;
+   padding:8px;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+ }
+ #portalPopup img{
+   max-width:100%;
+   max-height:100%;
+   object-fit:contain;
+ }
+ </style>
+</head>
+
+<body class="min-h-screen bg-[#eef5fa] text-gray-900">
+
+<!-- HEADER (ORIGINAL, SEM ALTERAÇÃO) -->
+<header class="sticky top-0 z-40 glass border-b border-white/30 shadow-lg">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
+
+   <a href="index.html" class="flex items-center gap-3">
+     <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-700 to-emerald-500 text-white font-black grid place-items-center">H</div>
+     <div>
+       <div class="text-xl font-black">HOSPICONNECT</div>
+       <div class="text-xs text-gray-600">Soluções Hospitalares</div>
+     </div>
+   </a>
+
+   <div id="menuDesktop" class="flex flex-1 justify-center gap-4">
+     <a href="catalogo-camas.html" class="px-2 py-2 text-emerald-800">Camas</a>
+     <a href="catalogo-poltronas.html" class="px-2 py-2 text-emerald-800">Poltronas</a>
+     <a href="catalogo-mesas.html" class="px-2 py-2 text-emerald-800">Mesas</a>
+     <a href="catalogo-bercos.html" class="px-2 py-2 text-emerald-800 font-bold">Berços</a>
+     <a href="catalogo-carros.html" class="px-2 py-2 text-emerald-800">Carros</a>
+     <a href="colchoes.html" class="px-2 py-2 text-emerald-800">Colchões</a>
+     <a href="cadeiras.html" class="px-2 py-2 text-emerald-800">Cadeiras</a>
+     <a href="catalogo-macas.html" class="px-2 py-2 text-emerald-800">Macas</a>
+     <a href="elevadores.html" class="px-2 py-2 text-emerald-800">Elevadores</a>
+   </div>
+
+    <!-- WHATSAPP À DIREITA  -->
+    <a href="https://wa.me/5561981964138?text=Olá!%20Gostaria%20de%20um%20orçamento."
+       class="ml-auto px-2 py-2 rounded-md hover:bg-gray-50 flex items-center">
+
+      <svg viewBox="0 0 32 32" fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="w-7 h-7">
+        <circle cx="16" cy="16" r="16" fill="#25D366"/>
+        <path d="M16 3C8.82 3 3 8.82 3 16c0 2.26.59 4.38 1.62 6.22L3.05 28.95l6.89-1.8A12.94 12.94 0 0016 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm6.35 18.5c-.26.73-1.54 1.34-2.51 1.52-.67.14-1.54.25-4.46-.96-3.74-1.54-6.16-5.34-6.34-5.59-.18-.25-1.51-2.01-1.51-3.84 0-1.83.96-2.72 1.3-3.09.34-.37.74-.46.99-.46s.5 0 .72.01c.23.01.54-.09.84.65.31.74 1.05 2.57 1.14 2.75.09.18.15.4.03.64-.12.25-.18.4-.36.62-.18.21-.38.48-.54.64-.18.18-.37.37-.16.73.21.36.93 1.54 2 2.49 1.37 1.22 2.53 1.61 2.89 1.79.36.18.57.15.78-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.78-.18s1.9.9 2.23 1.06c.33.17.55.25.63.38.08.13.08.78-.23 1.65z"
+              fill="white"/>
+      </svg>
+    </a>
+ </div>
+</header>
+
+<!-- ✅ TÍTULO (ACRÉSCIMO) -->
+<section class="max-w-7xl mx-auto px-4 mt-8">
+  <h1 class="text-3xl font-black text-center text-emerald-700">
+    Catálogo de Berços Hospitalares
+  </h1>
+</section>
+
+<!-- CONTEÚDO (ORIGINAL + BOTÕES) -->
+<main class="max-w-7xl mx-auto px-4 py-10 grid lg:grid-cols-2 gap-10">
+
+<!-- BERÇO 1090 -->
+<section class="bg-white rounded-xl shadow p-6 grid md:grid-cols-2 gap-8">
+ <div class="text-center">
+   <img src="berco1090.png" class="mx-auto h-56 object-contain cursor-pointer" onclick="openPortalPopup('berco1090.png')" />
+ </div>
+
+ <div class="divide-y">
+   <h2 class="text-xl font-black mb-4">Berço Hospitalar 1090</h2>
+
+   <details class="py-3"><summary class="flex justify-between font-semibold">Movimentos<span>⌄</span></summary><p class="mt-2">Trendelenburg e proclive reverso.</p></details>
+   <details class="py-3"><summary class="flex justify-between font-semibold">Estrutura<span>⌄</span></summary><p class="mt-2">Aço carbono com pintura eletrostática.</p></details>
+
+   <!-- ✅ BOTÕES -->
+   <div class="pt-6 flex flex-col sm:flex-row gap-3">
+     <a href="https://wa.me/5561981964138?text=Olá!%20Gostaria%20de%20COMPRAR%20o%20Berço%201090."
+        class="flex-1 bg-emerald-600 text-white font-semibold text-center py-3 rounded-lg hover:bg-emerald-700 transition">
+        Comprar
+     </a>
+
+     <a href="https://wa.me/5561981964138?text=Olá!%20Gostaria%20de%20ALUGAR%20o%20Berço%201090."
+        class="flex-1 border border-emerald-600 text-emerald-700 font-semibold text-center py-3 rounded-lg hover:bg-emerald-50 transition">
+        Alugar
+     </a>
+   </div>
+ </div>
+</section>
+
+<!-- BERÇO 1092 -->
+<section class="bg-white rounded-xl shadow p-6 grid md:grid-cols-2 gap-8">
+ <div class="text-center">
+   <img src="berco1092.png" class="mx-auto h-56 object-contain cursor-pointer" onclick="openPortalPopup('berco1092.png')" />
+ </div>
+
+ <div class="divide-y">
+   <h2 class="text-xl font-black mb-4">Berço Hospitalar 1092</h2>
+
+   <details class="py-3"><summary class="flex justify-between font-semibold">Movimentos<span>⌄</span></summary><p class="mt-2">Trendelenburg e proclive.</p></details>
+   <details class="py-3"><summary class="flex justify-between font-semibold">Estrutura<span>⌄</span></summary><p class="mt-2">Cesto acrílico removível.</p></details>
+
+   <!-- ✅ BOTÕES -->
+   <div class="pt-6 flex flex-col sm:flex-row gap-3">
+     <a href="https://wa.me/5561981964138?text=Olá!%20Gostaria%20de%20COMPRAR%20o%20Berço%201092."
+        class="flex-1 bg-emerald-600 text-white font-semibold text-center py-3 rounded-lg hover:bg-emerald-700 transition">
+        Comprar
+     </a>
+
+     <a href="https://wa.me/5561981964138?text=Olá!%20Gostaria%20de%20ALUGAR%20o%20Berço%201092."
+        class="flex-1 border border-emerald-600 text-emerald-700 font-semibold text-center py-3 rounded-lg hover:bg-emerald-50 transition">
+        Alugar
+     </a>
+   </div>
+ </div>
+</section>
+
+</main>
+
+<!-- POPUP E FOOTER (ORIGINAIS) -->
+<div id="portalOverlay" onclick="closePortalPopup()">
+ <div id="portalPopup" onclick="event.stopPropagation()">
+   <img id="portalImg">
+ </div>
+</div>
+
+<footer class="text-center py-8 text-sm">
+ © 2026 Hospiconnect. Todos os direitos reservados.
+</footer>
+
+<script>
+function openPortalPopup(src){
+ document.getElementById('portalImg').src = src;
+ document.getElementById('portalOverlay').classList.add('active');
+}
+function closePortalPopup(){
+ document.getElementById('portalOverlay').classList.remove('active');
+}
+</script>
+
+</body>
+</html>

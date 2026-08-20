@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo de Macas Hospitalares - Hospiconnect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.2); }
+    @media (max-width:600px){ #menuDesktop{ display:none!important; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#eef5fa] text-gray-900">
+
+  <!-- ===================== -->
+  <!-- BARRA SUPERIOR -->
+  <!-- ===================== -->
+  <header class="sticky top-0 z-40 glass border-b border-white/30 shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
+
+    <!-- Marca -->
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-700 to-emerald-500
+                  text-white font-black grid place-items-center">H</div>
+      <div>
+        <div class="text-xl font-black">HOSPICONNECT</div>
+        <div class="text-xs text-gray-600">Soluções Hospitalares</div>
+      </div>
+    </a>
+
+    <!-- MENUS CENTRALIZADOS -->
+    <div id="menuDesktop" class="flex flex-1 justify-center gap-4">
+      <a href="catalogo-camas.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Camas</a>
+      <a href="catalogo-poltronas.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Poltronas</a>
+      <a href="catalogo-mesas.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Mesas</a>
+      <a href="catalogo-bercos.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Berços</a>
+      <a href="catalogo-carros.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Carros</a>
+      <a href="colchoes.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Colchões</a>
+      <a href="cadeiras.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Cadeiras</a>
+      <a href="catalogo-macas.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Macas</a>
+      <a href="elevadores.html" class="text-center px-2 py-2 rounded-md from-emerald-700 text-emerald-800">Elevadores</a>
+    </div>
+
+    <!-- WHATSAPP À DIREITA  -->
+    <a href="https://wa.me/5561981964138?text=Olá!%20Gostaria%20de%20um%20orçamento."
+       class="ml-auto px-2 py-2 rounded-md hover:bg-gray-50 flex items-center">
+
+      <svg viewBox="0 0 32 32" fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="w-7 h-7">
+        <circle cx="16" cy="16" r="16" fill="#25D366"/>
+        <path d="M16 3C8.82 3 3 8.82 3 16c0 2.26.59 4.38 1.62 6.22L3.05 28.95l6.89-1.8A12.94 12.94 0 0016 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm6.35 18.5c-.26.73-1.54 1.34-2.51 1.52-.67.14-1.54.25-4.46-.96-3.74-1.54-6.16-5.34-6.34-5.59-.18-.25-1.51-2.01-1.51-3.84 0-1.83.96-2.72 1.3-3.09.34-.37.74-.46.99-.46s.5 0 .72.01c.23.01.54-.09.84.65.31.74 1.05 2.57 1.14 2.75.09.18.15.4.03.64-.12.25-.18.4-.36.62-.18.21-.38.48-.54.64-.18.18-.37.37-.16.73.21.36.93 1.54 2 2.49 1.37 1.22 2.53 1.61 2.89 1.79.36.18.57.15.78-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.78-.18s1.9.9 2.23 1.06c.33.17.55.25.63.38.08.13.08.78-.23 1.65z"
+              fill="white"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<section class="max-w-7xl mx-auto px-4 mt-8">
+  <h1 class="text-3xl font-black text-center text-emerald-700">Catálogo de Macas Hospitalares</h1>
+</section>
+
+<section id="catalogo" class="max-w-7xl mx-auto px-4 mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></section>
+
+<div id="modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+  <div class="bg-white p-6 max-w-3xl rounded-xl relative max-h-[80vh] overflow-y-auto">
+    <button onclick="closeModal()" class="absolute top-2 right-3 text-xl">×</button>
+    <h2 id="modalTitulo" class="text-xl font-black mb-3"></h2>
+    <p id="modalDescricao" class="whitespace-pre-line text-sm leading-relaxed"></p>
+  </div>
+</div>
+
+<footer class="text-center py-8 text-sm">© 2026 Hospiconnect. Todos os direitos reservados.</footer>
+
+<script>
+const macas = [
+  { id:'2015FAEC', nome:'Maca Hospitalar 2015 FAEC', img:'maca2015FAEC.png', desc:`Maca hospitalar hidráulica reforçada para uso hospitalar intensivo.
+
+Sistema de acionamento hidráulico e pistão a gás, com comandos manuais e por pedal.
+
+Leito articulado em PEAD dividido em quatro seções, permitindo Fowler, Cardíaco, Trendelenburg e Proclive.
+
+Estrutura em aço carbono com pintura eletrostática e tratamento antiferrugem.
+
+Rodízios de 6” com freio individual em todas as rodas.
+
+Capacidade segura de até 280kg.`},
+
+  { id:'2015AE', nome:'Maca Hospitalar 2015 AE', img:'maca2015AE.png', desc:`Maca hospitalar com acionamento hidráulico e pistões a gás.
+
+Leito articulado em aço carbono, dividido em duas seções.
+
+Permite elevação dorsal, Trendelenburg e Proclive.
+
+Rodízios com freio total.
+
+Alta resistência mecânica.`},
+
+  { id:'2015FREC', nome:'Maca Hospitalar 2015 FREC', img:'maca2015FREC.png', desc:`Maca hospitalar com leito radiotransparente.
+
+Permite exames de imagem sem transferência do paciente.
+
+Leito em quatro seções com policarbonato.
+
+Rodízios de 6” com freio individual.
+
+Capacidade segura de até 280kg.`},
+
+  { id:'2015LS', nome:'Maca Hospitalar 2015 LS', img:'maca2015LS.png', desc:`Maca hospitalar com elevação hidráulica por pedais.
+
+Movimentos manuais a gás para dorso e inclinações.
+
+Leito em PEAD em duas seções.
+
+Rodízios de 6” com freio total.
+
+Indicada para pronto atendimento.`},
+
+  { id:'2017', nome:'Maca Hospitalar Radiotransparente 2017', img:'maca2017.png', desc:`Maca hospitalar de alta complexidade com leito radiotransparente.
+
+Elevação por colunas hidráulicas.
+
+Movimentos Fowler, Cardíaco, Trendelenburg e Proclive.
+
+Estrutura em aço carbono.
+
+Capacidade de até 280kg.`}
+];
+
+const catalogo = document.getElementById('catalogo');
+
+macas.forEach((m,i)=>{
+  catalogo.innerHTML += `
+    <div class="bg-white rounded-xl p-4 shadow text-center">
+      <img src="${m.img}" class="mx-auto w-40 h-52 object-contain mb-4 cursor-pointer" onclick="openModal(${i})">
+      <h3 class="font-bold mb-3">${m.nome}</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <a href="https://wa.me/5561981964138?text=Quero%20COMPRAR%20${m.nome}" class="bg-emerald-600 text-white rounded py-2">Comprar</a>
+        <a href="https://wa.me/5561981964138?text=Quero%20ALUGAR%20${m.nome}" class="bg-blue-600 text-white rounded py-2">Alugar</a>
+      </div>
+    </div>`;
+});
+
+function openModal(index){
+  const m = macas[index];
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  modalTitulo.innerText = m.nome;
+  modalDescricao.innerText = m.desc;
+}
+
+function closeModal(){ modal.classList.add('hidden'); }
+</script>
+</body>
+</html>
